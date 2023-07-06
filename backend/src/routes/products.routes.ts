@@ -1,9 +1,11 @@
 import express, { Router } from 'express';
-import { test } from '../controllers/meal.controller';
+import { createProducts, allProducts } from '../controllers/products.controller';
 
 const router = express.Router();
 
-router.get('/register', test);
+router.post('/register', createProducts);
+router.get('/all', allProducts);
+
 /**
    * @swagger
    * /register:
