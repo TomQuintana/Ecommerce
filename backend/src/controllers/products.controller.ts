@@ -7,19 +7,19 @@ import productModel from '../models/product.model';
 import { uploadFile } from '../services';
 
 const createProducts = async (req: any, res: any) => {
-  
+
   if (!req.files || Object.keys(req.files).length === 0 || !req.files.file) {
     res.status(400).json({msg:  'No files were uploaded.' });
     return;
   }
 
- const pathFile = await uploadFile(req.files, ['jpeg'], 'Products') 
+  const pathFile = await uploadFile(req.files, ['jpeg'], 'Products') 
 
   res.json({
     msg: pathFile
   })
 
-  
+
 
 }
   //const productData = new Product(req.body)

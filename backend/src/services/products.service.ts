@@ -1,17 +1,17 @@
 import { v4 as uuidv4 } from 'uuid';
 import { fileURLToPath } from 'url';
-import {dirname, join} from 'path'
+import {dirname, join} from 'path';
 
-const uploadFile = (files:any, extentionValid = ['jpeg', 'jpg'], folder: string = '') => {
+const uploadFile = (files:any, extentionValid = ['jpeg', 'jpg'], folder = '') => {
 
   return new Promise( (resolve, reject) => {
-    const {file} = files
+    const {file} = files;
 
-    const nameSplited = file.name.split('.')
-    const extention = nameSplited[nameSplited.length - 1]
+    const nameSplited = file.name.split('.');
+    const extention = nameSplited[nameSplited.length - 1];
 
     if(!extentionValid.includes(extention)) {
-      return reject(`Extention ${extention} is not valid`)
+      return reject(`Extention ${extention} is not valid`);
     }
 
     const nameTemp = uuidv4() + '.' + extention;
@@ -25,12 +25,12 @@ const uploadFile = (files:any, extentionValid = ['jpeg', 'jpg'], folder: string 
       if (err) {
         return reject(err);
       }
-      resolve(nameTemp)
+      resolve(nameTemp);
     }); 
-  })
+  });
 
-}
+};
 
 export {
   uploadFile
-}
+};
