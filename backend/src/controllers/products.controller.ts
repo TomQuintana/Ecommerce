@@ -1,42 +1,43 @@
 import { Request, Response } from 'express';
-import { v4 as uuidv4 } from 'uuid';
-import { fileURLToPath } from 'url';
-import {dirname, join} from 'path'
 import Product from '../models/product.model'
-import productModel from '../models/product.model';
 import { uploadFile } from '../services';
 
 const createProducts = async (req: any, res: any) => {
 
-  if (!req.files || Object.keys(req.files).length === 0 || !req.files.file) {
-    res.status(400).json({msg:  'No files were uploaded.' });
-    return;
+  //TODO: add more validation
+  
+  const {name, category, stock, price} = req.body
+
+  interface Product{
+    name: string;
+    category: string;
+    stock: number;
+    price: number;
+    img: string;
   }
 
-  const pathFile = await uploadFile(req.files, ['jpeg'], 'Products') 
+  const objProduct: Product = {
+    name: name,
+    category: category,
+    stock: stock,
+    price: price,
+    img: ''
+  }
 
-  res.json({
-    msg: pathFile
-  })
+  try {
+    
+    const productData = new Product(objProduct)
+    const productSave = await productData.save()
+    return res.json({
+      productSave
+    })
 
-
-
-}
-  //const productData = new Product(req.body)
-
-  // try {
-  //   const productSave = await productData.save()
-  //   return res.json({
-  //     productSave
-  //   })
-  //
-  // } catch (error) {
-  //   res.status(500).json({ 
-  //     error: 'An internal server error occurred.'
-  //   });
-  // }
- 
-//};
+  } catch (error) {
+    res.status(500).json({ 
+      error: 'An internal server error occurred.'
+    });
+  }
+};
 
 const allProducts = async ( req: Request, res: Response) => {
   
@@ -47,7 +48,36 @@ const allProducts = async ( req: Request, res: Response) => {
   });
 };
 
+const imageProduct = async ( req: Request, res: Response) => {
+
+  const {id, colection} = req.params
+  const product = await Product.findById(id)
+
+  if (!req.files || Object.keys(req.files).length === 0 || !req.files.file) {
+    res.status(400).json({msg:  'No files were uploaded.' });
+    return;
+  }
+
+  try {
+    const pathFile: any = await uploadFile(req.files, ['webp'], 'Products') 
+    product!.img = pathFile
+
+    const productSave = await product!.save()
+
+    res.json({
+      product 
+    })   
+
+  } catch (error) {
+    res.status(500).json({ 
+      error: 'An internal server error occurred.'
+    });
+  }
+  
+}
+
 export {
   createProducts,
-  allProducts
+  allProducts,
+  imageProduct
 };

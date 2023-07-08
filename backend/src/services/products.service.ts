@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { fileURLToPath } from 'url';
 import {dirname, join} from 'path';
 
-const uploadFile = (files:any, extentionValid = ['jpeg', 'jpg'], folder = '') => {
+const uploadFile = (files:any, extentionValid = ['jpeg', 'jpg', 'webp'], folder = '') => {
 
   return new Promise( (resolve, reject) => {
     const {file} = files;
@@ -19,7 +19,7 @@ const uploadFile = (files:any, extentionValid = ['jpeg', 'jpg'], folder = '') =>
     const __filename = fileURLToPath(import.meta.url);
     const __dirname = dirname(__filename);
 
-    const uploadPath = join(__dirname, '../uploads/', folder, nameTemp);
+    const uploadPath = join(__dirname, '../impProduct/', folder, nameTemp);
 
     file.mv(uploadPath, (err: any) => {
       if (err) {

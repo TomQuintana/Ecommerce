@@ -5,7 +5,7 @@ interface IUser {
   category: string;
   stock: number;
   price: number;
-  image: string;
+  img: string;
 }
 
 const ProductSchema = new Schema<IUser>({
@@ -25,7 +25,7 @@ const ProductSchema = new Schema<IUser>({
     type: Number,
     required: true  
   },
-  image: {
+  img: {
     type: String,
     require: false
   }
