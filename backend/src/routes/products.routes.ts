@@ -1,20 +1,40 @@
 import express from 'express';
 import { createProducts, allProducts, imageProduct } from '../controllers/products.controller';
+import checkAuth from '../middleware/auth';
 
 const router = express.Router();
 
-router.post('/register', createProducts);
+//publico
 router.get('/all', allProducts);
+
+// privado
+router.post('/register',checkAuth , createProducts);
 router.put('/image/:id/:colection', imageProduct);
+
+
+//TODO: delete endpoint
+//TODO: updated endpoint
+
 
 /**
    * @swagger
    * /register:
    *   post:
    *     description: Register a products
-   *     responses:
-   *       200:
-   *         description: hello world
+   *     tags:
+ *       - Sample
+ *     parameters:
+ *       - in: query
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The ID of the sample item to retrieve
+ *     responses:
+ *       200:
+ *         description: Successful operation
+ *       404:
+ *         description: Sample item not found
    */
 
 /**
