@@ -1,4 +1,4 @@
-import jwt, {Secret} from 'jsonwebtoken'
+import jwt, {Secret} from 'jsonwebtoken';
 import { Request, Response } from 'express';
 import dotenv from 'dotenv';
 import Product from '../models/product.model';
@@ -13,24 +13,24 @@ const checkAuth = async (req: Request, res: Response, next: any) => {
   if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
     try {
       token = req.headers.authorization.split(' ')[1];
-      const decoded = jwt.verify(token, secretToken)
+      const decoded = jwt.verify(token, secretToken);
       console.log(decoded);
       
 
-      return next() 
+      return next(); 
 
     } catch (error) {
-      const e = new Error('Token no valido ')
-      return res.status(403).json({msg: e.message})   
+      const e = new Error('Token no valido ');
+      return res.status(403).json({msg: e.message});   
     }
   }  
 
   if(!token) {
-    const error = new Error('Token no valido o inexistente')
-    res.status(403).json({msg: error.message})
+    const error = new Error('Token no valido o inexistente');
+    res.status(403).json({msg: error.message});
   }
 
-  next()
-}
+  next();
+};
 
-export default checkAuth 
+export default checkAuth; 

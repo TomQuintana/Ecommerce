@@ -29,7 +29,7 @@ const sellerLogin = async (req: Request, res: Response) => {
 
       } catch (error) {
         //NOTE: declare error
-        console.log(error)
+        console.log(error);
       }
     }
 
